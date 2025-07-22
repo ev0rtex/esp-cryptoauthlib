@@ -16,7 +16,6 @@ set(COMPONENT_SRCDIRS       "${CRYPTOAUTHLIB_DIR}/atcacert"
 
 set(COMPONENT_SRCS          "${COMPONENT_DIR}/cryptoauthlib/lib/hal/atca_hal.c"
                             "${COMPONENT_DIR}/cryptoauthlib/lib/hal/hal_freertos.c"
-                            "${COMPONENT_DIR}/cryptoauthlib/third_party/hal/esp32/hal_esp32_i2c.c"
                             "${COMPONENT_DIR}/cryptoauthlib/third_party/hal/esp32/hal_esp32_timer.c"
                             "${COMPONENT_DIR}/cryptoauthlib/third_party/atca_mbedtls_patch.c"
                             )
