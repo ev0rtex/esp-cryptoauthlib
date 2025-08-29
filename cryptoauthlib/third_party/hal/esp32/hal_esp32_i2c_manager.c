@@ -24,7 +24,8 @@ ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg *cfg) {
         dev_cfg.config.device_address          = cfg->atcai2c.address >> 1; // Convert to 7-bit address
         dev_cfg.config.scl_speed_hz            = cfg->atcai2c.baud;         // Set the SCL speed
         dev_cfg.config.scl_wait_us             = 0;                         // Use default wait time
-        dev_cfg.config.flags.disable_ack_check = 0;                         // Enable ACK check by default
+        dev_cfg.config.flags.disable_ack_check = 1; // Disable ACK check by default to allow polling without flooding the serial
+                                                    // console with errors
 
         esp_err_t err = i2c_manager_upsert_device(&dev_cfg, &dev_handle);
         if (err != ESP_OK) {
@@ -78,10 +79,7 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
     if (txdata && txlength > 0) {
         memcpy(&buf[1], txdata, txlength);
     }
-    esp_log_level_t i2cm_log_level = esp_log_level_get("i2c_manager");
-    esp_log_level_set("i2c_manager", ESP_LOG_VERBOSE);
     esp_err_t err = i2c_manager_transmit(&dev_cfg, buf, total, pdMS_TO_TICKS(1000));
-    esp_log_level_set("i2c_manager", i2cm_log_level);
     return (err == ESP_OK) ? ATCA_SUCCESS : ATCA_COMM_FAIL;
 }
 
@@ -104,10 +102,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, u
     dev_cfg.config.scl_speed_hz         = hal_cfg->config.scl_speed_hz;
 
     // Receive data from the device
-    esp_log_level_t i2cm_log_level = esp_log_level_get("i2c_manager");
-    esp_log_level_set("i2c_manager", ESP_LOG_VERBOSE);
     esp_err_t err = i2c_manager_receive(&dev_cfg, rxdata, *rxlength, pdMS_TO_TICKS(1000));
-    esp_log_level_set("i2c_manager", i2cm_log_level);
     if (err == ESP_OK) {
         return ATCA_SUCCESS;
     } else {

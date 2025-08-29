@@ -253,7 +253,7 @@ ATCA_STATUS hal_unlock_mutex(void * pMutex);
 ATCA_STATUS hal_alloc_shared(void ** pShared, size_t size, const char* pName, bool* initialized);
 ATCA_STATUS hal_free_shared(void * pShared, size_t size);
 
-#if  defined(__linux__) || defined(__APPLE__)
+#if  defined(__linux__)
 #include <unistd.h>
 #include <sys/syscall.h>
 typedef pid_t hal_pid_t;
