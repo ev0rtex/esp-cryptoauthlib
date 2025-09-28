@@ -1,7 +1,7 @@
 #
 # CMakeLists.txt file for cryptoauthlib
 #
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 set(CRYPTOAUTHLIB_DIR "cryptoauthlib/lib")
 set(COMPONENT_SRCDIRS       "${CRYPTOAUTHLIB_DIR}/atcacert"
                             "${CRYPTOAUTHLIB_DIR}/calib"
