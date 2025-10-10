@@ -168,10 +168,14 @@
 #define ATCA_STRINGIFY(x) #x
 #define ATCA_TOSTRING(x) ATCA_STRINGIFY(x)
 
-#ifdef ATCA_PRINTF
-    #define ATCA_TRACE(s, m)         atca_trace_msg(s, __FILE__ ":" ATCA_TOSTRING(__LINE__) ":%x:" m "\n")
+#if defined(CONFIG_LOG_DEFAULT_LEVEL) && (CONFIG_LOG_DEFAULT_LEVEL >= 4)
+    #ifdef ATCA_PRINTF
+        #define ATCA_TRACE(s, m) atca_trace_msg(s, __FILE__ ":" ATCA_TOSTRING(__LINE__) ":%x:" m "\n")
+    #else
+        #define ATCA_TRACE(s, m) atca_trace(s)
+    #endif
 #else
-    #define ATCA_TRACE(s, m)         atca_trace(s)
+    #define ATCA_TRACE(s, m) s
 #endif
 
 #endif /* CRYPTOAUTHLIB_H */
