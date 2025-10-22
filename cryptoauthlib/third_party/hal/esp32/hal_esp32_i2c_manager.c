@@ -5,7 +5,7 @@
 
 static const char *TAG = "cryptoauthlib_hal";
 
-#define HAL_I2C_MAX_TRANSFER 1 + 128 // Maximum transfer size for I2C
+#define HAL_I2C_MAX_TRANSFER 1 + 256 // Maximum transfer size for I2C (address + payload)
 
 static bool i2c_reserved_addresses_allowed = false;
 
